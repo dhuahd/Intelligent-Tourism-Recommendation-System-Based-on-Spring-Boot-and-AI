@@ -1,15 +1,8 @@
 基于 SpringBoot + Vue + AI 大模型的智慧旅游推荐系统
-
-
----
-
-## 📋 项目概述
-
+📋 项目概述
 本系统是一个融合 **AI 大模型 + 传统旅游管理** 的智慧旅游平台。用户可以在前端浏览景点、酒店、旅游线路并进行预订，同时通过 **AI 旅游助手"小智"** 实现智能行程规划、语音/文字问答、景点酒店一键预订。
 
----
-
-## 🏗️ 技术架构
+🏗️ 技术架构
 
 | 层级 | 技术栈 |
 |------|--------|
@@ -39,12 +32,9 @@
 - **Tool Calling**：AI 可调用业务接口实现真实业务操作
 - **多模型支持**：兼容 OpenAI / 通义千问 / Ollama 本地模型
 
----
 
 ## 📂 项目结构
 
-```
-毕业设计代码数据库/
 ├── tourism-backend/          # Spring Boot 后端
 │   ├── src/main/java/com/shanzhu/tourism/
 │   │   ├── controller/       # 接口层（ChatController、XiaoZhiController 等）
@@ -61,12 +51,6 @@
 │   ├── tourism-admin-frontend/    # 管理后台（Vue 3 + Element Plus）
 │   └── tourism-user-frontend/    # 用户前端（Vue 3 + Element Plus）
 ├── tourism.sql                    # 数据库初始化脚本
-└── 5月20日.mp4                    # 答辩演示视频
-```
-
----
-
-## 🚀 快速启动
 
 ### 1. 环境要求
 - JDK 17+
@@ -81,7 +65,6 @@ cd tourism-backend
 # 修改 application.yml 中的数据库连接和 API Key
 mvn clean package -DskipTests
 java -jar target/tourism-backend-0.0.1-SNAPSHOT.jar
-```
 
 ### 3. 前端启动
 ```bash
@@ -101,7 +84,6 @@ langchain4j:
       api-key: ${DASHSCOPE_API_KEY}
 ```
 
----
 
 ## 🧪 AI 助手对话示例
 
