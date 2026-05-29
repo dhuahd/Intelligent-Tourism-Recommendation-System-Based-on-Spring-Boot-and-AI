@@ -1,0 +1,127 @@
+# application-dev.yml
+
+# ==================== #
+#  LangChain4j 配置区   #
+# ==================== #
+langchain4j:
+  # DeepSeek 模型配置
+  open-ai:
+    chat-model:
+      base-url: https://api.deepseek.com
+      api-key: ${DEEP_SEEK_API_KEY}
+      model-name: deepseek-chat
+      temperature: 0.7  # 创造性控制（0-2）
+      max-tokens: 2000   # 响应最大token数
+      timeout: 60s      # 请求超时时间
+      log-requests: true
+      log-responses: true
+
+  # Ollama本地模型配置
+  ollama:
+    chat-model:
+      base-url: http://localhost:11434
+      model-name: deepseek-r1:1.5b
+      temperature: 0.5
+      timeout: 120s     # 本地模型可适当延长超时
+      log-requests: true
+      log-responses: true
+
+  # 阿里通义千问配置
+  community:
+    dashscope:
+      chat-model:
+        api-key: ${DASH_SCOPE_API_KEY}
+        model-name: qwen-max
+        temperature: 0.3
+        max-tokens: 1500
+      streaming-chat-model:  # 流式输出单独配置
+        api-key: ${DASH_SCOPE_API_KEY}
+        model-name: qwen-plus
+        temperature: 0.8
+
+# ==================== #
+#   Spring数据源配置   #
+# ==================== #
+spring:
+  # MongoDB对话记忆存储
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/chat_memory_db
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password: 123456
+      timeout: 10s
+      lettuce:
+        pool:
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
+          max-wait: -1ms
+  # MySQL主数据源（Druid连接池）
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tourism?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    druid:
+      initial-size: 5
+      min-idle: 10
+      max-active: 20
+      max-wait: 60000
+      connect-timeout: 30000
+      socket-timeout: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 900000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      web-stat-filter:
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: travel
+        login-password: 123456
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+        wall:
+          config:
+            multi-statement-allow: true
+  devtools:
+    restart:
+      enabled: false  # Windows下RestartLauncher找java进程问题，禁用热重启
+
+  # Redis缓存配置
+
+
+# ==================== #
+#   其他框架配置       #
+# ==================== #
+# MyBatis-Plus SQL日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 全局日志级别
+logging:
+  level:
+    root: debug
+
+# ==================== #
+#   自定义业务配置     #
+# ==================== #
+useRecommend: true  # 是否开启推荐算法
+
+# 旅游AI知识库配置
+tourism:
+  rag:
+    documents-path: ./knowledge  # RAG知识库文档目录，支持.md/.txt/.pdf
